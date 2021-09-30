@@ -4,6 +4,10 @@ const Manager = require('./lib/Manager')
 const Engineer = require('./lib/Engineer')
 const Intern = require('./lib/Intern')
 
+//Manager variable 
+let manager
+const employeeList = []
+
 const buildTeam = () => {
     return inquirer.prompt([
         {
@@ -67,6 +71,9 @@ const buildTeam = () => {
         },
 
     ]).then(managerAnswers => {
+        //fills in manager variable 
+        manager = new Manager(managerAnswers.managerName, managerAnswers.managerID,managerAnswers.managerEmail,managerAnswers.managerOffice)
+        //Routes depending on answer to add new team member
         if (managerAnswers.teamMember === 'add an engineer') {
             engineerEmployee();
         } else if (managerAnswers.teamMember === 'add an intern') {
@@ -99,12 +106,12 @@ function engineerEmployee() {
             //Engineer's ID
             type: 'input',
             name: 'engineerID',
-            message: 'What is the engineers ID? (Required)',
+            message: 'What is the engineers employee ID? (Required)',
             validate: titleInput => {
                 if (titleInput) {
                     return true;
                 } else {
-                    console.log('Please enter the engineers ID!');
+                    console.log('Please enter the engineers employee ID!');
                     return false;
                 }
             }
@@ -145,12 +152,15 @@ function engineerEmployee() {
             choices: ['add an engineer', 'add an intern', 'Team is complete'],
         },
     ]).then(engineerAnswers => {
+        let engineer = new Engineer(engineerAnswers.engineerName,engineerAnswers.engineerID,engineerAnswers.engineerEmail,engineerAnswers.engineerUser)
+        employeeList.push(engineer)
         if (engineerAnswers.teamMember === 'add an engineer') {
             engineerEmployee();
         } else if (engineerAnswers.teamMember === 'add an intern') {
             internEmployee();
         } else {
-            return;
+            console.log(employeeList)
+            return
         }
     }
     )
@@ -161,13 +171,13 @@ function internEmployee() {
         {
             //Intern's Name
             type: 'input',
-            name: 'InternName',
-            message: 'What is the Interns name? (Required)',
+            name: 'internName',
+            message: 'What is the interns name? (Required)',
             validate: titleInput => {
                 if (titleInput) {
                     return true;
                 } else {
-                    console.log('Please enter the Interns name!');
+                    console.log('Please enter the interns name!');
                     return false;
                 }
             }
@@ -175,13 +185,13 @@ function internEmployee() {
         {
             //Intern's ID
             type: 'input',
-            name: 'InternID',
-            message: 'What is the Interns ID? (Required)',
+            name: 'internID',
+            message: 'What is the interns employee ID? (Required)',
             validate: titleInput => {
                 if (titleInput) {
                     return true;
                 } else {
-                    console.log('Please enter the Interns ID!');
+                    console.log('Please enter the interns employee ID!');
                     return false;
                 }
             }
@@ -189,13 +199,13 @@ function internEmployee() {
         {
             //Intern's Email
             type: 'input',
-            name: 'InternEmail',
-            message: 'What is the Interns email? (Required)',
+            name: 'internEmail',
+            message: 'What is the interns email? (Required)',
             validate: titleInput => {
                 if (titleInput) {
                     return true;
                 } else {
-                    console.log('Please enter the Interns email!');
+                    console.log('Please enter the interns email!');
                     return false;
                 }
             }
@@ -222,11 +232,14 @@ function internEmployee() {
             choices: ['add an engineer', 'add an intern', 'Team is complete'],
         },
     ]).then(internAnswers => {
+        let intern = new Intern(internAnswers.internName,internAnswers.internID,internAnswers.internEmail,internAnswers.internSchool)
+        employeeList.push(intern)
         if (internAnswers.teamMember === 'add an engineer') {
             engineerEmployee();
         } else if (internAnswers.teamMember === 'add an intern') {
             internEmployee();
         } else {
+            console.log(employeeList)
             return;
         }
     }
