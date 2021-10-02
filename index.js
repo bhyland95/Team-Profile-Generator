@@ -1,4 +1,6 @@
 const inquirer = require('inquirer');
+const fs = require('fs');
+const generateHTML = require('./src/generateHTML');
 
 const Manager = require('./lib/Manager')
 const Engineer = require('./lib/Engineer')
@@ -79,7 +81,8 @@ const buildTeam = () => {
             addEmployee();
         } else {
             console.log(employeeList)
-            return;
+            writeFile(generateHTML)
+                ;
         }
     }
     )
@@ -167,26 +170,45 @@ function addEmployee() {
                 message: 'Would you like to add a team member? Or is the team finished?',
                 choices: ['Yes. Add a team member.', 'No.Team is complete'],
             }
-        ]).then(function ({employeeInfo,anotherTeamMember}) {
-        
+        ]).then(function ({ employeeInfo, anotherTeamMember }) {
+
             let newEmployee;
             if (employeeRole === "Engineer") {
-                newEmployee = new Engineer(employeeName,employeeID,employeeEmail,employeeInfo);
+                newEmployee = new Engineer(employeeName, employeeID, employeeEmail, employeeInfo);
             } else if (employeeRole === "Intern") {
-                newEmployee = new Intern(employeeName,employeeID,employeeEmail,employeeInfo);
+                newEmployee = new Intern(employeeName, employeeID, employeeEmail, employeeInfo);
             }
             employeeList.push(newEmployee)
 
-            if(anotherTeamMember === 'Yes. Add a team member.'){
+            if (anotherTeamMember === 'Yes. Add a team member.') {
                 addEmployee()
-            } else{
+            } else {
                 console.log(employeeList)
-                return
+                writeFile(generateHTML)
             }
         })
     })
 };
 
+// writing files
+const writeFile = fileContent => {
+    fs.writeFile('./dist/index.html', fileContent, err => {
+        {
+             
+            if (err) {
+                console.log(err);
+                return;
+               
+            } else {
+                console.log("File Created!")
+            }
+        }
+    })
+};
 
 
-buildTeam();
+
+
+buildTeam()
+
+
