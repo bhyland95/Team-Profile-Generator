@@ -18,6 +18,7 @@
  
   ## Usage
   Answer the questions prompted to you after running node index in the terminal
+  https://drive.google.com/file/d/1pI7QvsXbVoHOIyeF9eYc9oR2768LMo7N/view
  
   ## License
   This application is covered by the MIT license. 
