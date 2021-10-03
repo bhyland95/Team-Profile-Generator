@@ -1,10 +1,10 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
-const generateHTML = require('./src/generateHTML');
 
 const Manager = require('./lib/Manager')
 const Engineer = require('./lib/Engineer')
-const Intern = require('./lib/Intern')
+const Intern = require('./lib/Intern');
+const generatePage = require('./src/generateHTML');
 
 
 const employeeList = []
@@ -70,13 +70,14 @@ const addManager = () => {
         const manager = new Manager(name, id, email, officeNumber);
 
         employeeList.push(manager)
+        addEmployee()
     })
 };
 
 const addEmployee = () => {
     console.log(`
     =====================
-    Add the team members
+    Add new team member
     =====================`)
     inquirer.prompt([
         {
@@ -178,17 +179,18 @@ const addEmployee = () => {
             employeeList.push(employee);
 
             if (addNewEmployee) {
-                return addEmployee(employeeList);
+                return addEmployee();
             } else {
                 console.log(employeeList)
-                return employeeList;
+                writeFile(employeeList)
+                
             }
         })
 }
 
 // function to generate HTML page file using file system 
 const writeFile = data => {
-    fs.writeFile('./dist/index.html', data, err => {
+    fs.writeFile('./dist/index.html', generatePage(data), err => {
         // if there is an error 
         if (err) {
             console.log(err);
@@ -201,10 +203,6 @@ const writeFile = data => {
 };
 
 addManager()
-    .then(addEmployee)
-    .then(employeeList => {
-        return generateHTML(employeeList);
-    })
 
 
 
