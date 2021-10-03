@@ -1,5 +1,12 @@
+generateHTML = (data) =>{
+    for(let i = 0; i < data.length; i++){
+        console.log(i)
+    }
+}
+
+
 // generate html page 
-const generateHTML =
+const generatePage =   
     `
   <!DOCTYPE html>
   <html lang="en">
@@ -20,7 +27,7 @@ const generateHTML =
           <div class="container">
               <div class="row justify-content-center" id="team-cards">
                   <!--Team Cards-->
-                  <p>Hello</p>
+                  
               </div>
           </div>
       </main>
@@ -30,5 +37,6 @@ const generateHTML =
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>  
   </html>
 `;
+
 
 module.exports = generateHTML
