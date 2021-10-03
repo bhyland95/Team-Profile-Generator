@@ -1,0 +1,12 @@
+.navbar {
+background-color: navy;
+color: white
+}
+
+.card-header{
+    background-color: rgb(179, 204, 255);
+}
+
+.card-body{
+    background-color: rgb(242, 242, 242);
+}
